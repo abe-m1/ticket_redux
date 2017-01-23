@@ -22,15 +22,25 @@ class Signup extends Component {
     render(){
         const { handleSubmit, fields: { email, password, passwordConfirm}} = this.props
         return(
-            <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
+             <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
                 <fieldset className="form-group">
                     <label>Email: </label>
-                    <imput className="form-control" {...email} />
-                    {email.touched && email.error && <div className="error">{passwordConfirm.error}</div>}
+                    <input className="form-control" {...email} />
+                    {email.touched && email.error && <div className="error">{email.error}</div>}
+                </fieldset>
+                <fieldset className="form-group">
+                    <label>Password: </label>
+                    <input type="password" className="form-control" {...password} />
+                    {password.touched && password.error && <div className="error">{password.error}</div>}
+    
+                </fieldset>
+                <fieldset className="form-group">
+                    <label>Confirm Password: </label>
+                    <input type="password" className="form-control" {...passwordConfirm} />
+                    {passwordConfirm.touched && passwordConfirm.error && <div className="error">{passwordConfirm.error}</div>}
                 </fieldset>
                 {this.renderAlert()}
                 <button action="submit" className="btn btn-primary" >Sign Up!</button>
-
             </form>
         )
     }

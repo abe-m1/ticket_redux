@@ -8,7 +8,7 @@ class Signin extends Component{
         this.props.signinUser({email, password})
     }
 
-    renerAlert(){
+    renderAlert(){
         if (this.props.errorMessage){
             return(
                 <div className="alert alert-danger">
