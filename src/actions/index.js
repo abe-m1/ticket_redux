@@ -93,4 +93,33 @@ export function createTicket({ title, categories, content}){
     }
 }
 
+ export function fetchTicket(id){
+     return function(dispatch){
+         axios.get(`${ ROOT_URL}/ticket/${id}`, { headers: {authorization: localStorage.getItem('token')}
+         })
+         .then(response => {
+             dispatch({
+                 type: FETCH_TICKET,
+                 payload: response.data.ticket
+             })
+         })
+     }
+ }
+
+
+ export function deleteTicket(id){
+     return function(dispatch){
+         axios.delete(`${ROOT_URL}/ticket/${id}`, { headers: {authorization: localStorage.getItem('token')}})
+            .then(response =>{
+                
+                
+                browserHistory.push('/ticket')
+                dispatch({ type: FETCH_TICKETS})
+            })
+
+     }
+    
+    
+}
+
 

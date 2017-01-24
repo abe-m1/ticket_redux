@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { connect} from 'react-redux'
-
-import * as actions from '../../actions/index'
+import * as actions from '../../actions'
 import { Link } from 'react-router'
 
 class TicketIndex extends Component{
@@ -46,7 +45,7 @@ class TicketIndex extends Component{
 }
 
 function mapStateToProps(state){
-    console.log('STATE',state)
+    
     return { tickets : state.ticket.all }
 }
 

@@ -1,7 +1,9 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
+import * as actions from '../../actions'
+import { Link } from 'react-router'
 
-import { fetchTicket, deleteTicket } from '../actions/index'
+
 
 class TicketShow extends Component {
     static contextTypes = {
@@ -14,9 +16,7 @@ class TicketShow extends Component {
 
     onDeleteClick(){
         this.props.deleteTicket(this.props.params.id)
-            .then(()=>{
-                this.context.router.push('/')
-            })
+          
     }
 
     render(){
@@ -28,7 +28,7 @@ class TicketShow extends Component {
 
         return(
             <div>
-                <Link to="/">Back to Index</Link>
+                <Link to="/ticket">Back to Index</Link>
                 <button className="btn btn-danger pull-xs-right"
                     onClick={this.onDeleteClick.bind(this)}>
                     Delete Ticket 
@@ -42,7 +42,7 @@ class TicketShow extends Component {
 }
 
 function mapStateToProps(state){
-    return { post: state.tickets.ticket}
+    return { ticket: state.ticket.ticket}
 }
 
-export default connect(mapStateToProps, { fetchTicket, deleteTicket})(TicketShow)
+export default connect(mapStateToProps, actions)(TicketShow)

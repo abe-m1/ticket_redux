@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { createStore, applyMiddleware } from 'redux';
+import { createStore, applyMiddleware, compose } from 'redux';
 import { Router, Route, IndexRoute, browserHistory } from 'react-router';
 import reduxThunk from 'redux-thunk'
 
@@ -14,11 +14,13 @@ import TicketIndex from './components/ticket/ticket_index';
 import RequireAuth from './components/auth/require_auth';
 import Welcome from './components/welcome'
 import TicketNew from './components/ticket/ticket_new'
+import TicketShow from './components/ticket/ticket_show'
 
 import reducers from './reducers';
 import { AUTH_USER } from './actions/types'
 
-const createStoreWithMiddleware = applyMiddleware(reduxThunk)(createStore);
+const createStoreWithMiddleware = compose(applyMiddleware(reduxThunk),
+        window.devToolsExtension ? window.devToolsExtension() : f => f)(createStore)
 const store = createStoreWithMiddleware(reducers)
 const token = localStorage.getItem('token')
 
@@ -35,10 +37,12 @@ ReactDOM.render(
         <Route path="signout" component={Signout} />
         <Route path="signup" component={Signup} />
         <Route path="ticket" component={RequireAuth(TicketIndex)} >
+        
          
           
         </Route>
         <Route path="new" component={TicketNew} />
+        <Route path="ticket/:id" component={ TicketShow} />
       </Route>  
     </Router>
   </Provider>
