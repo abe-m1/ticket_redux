@@ -1,6 +1,6 @@
 import React, { Component, PropTypes }  from 'react'
 import { reduxForm } from 'redux-form'
-import { createPost } from '../actions/index'
+import * as actions from '../../actions'
 import { Link } from 'react-router'
 
 class TicketNew extends Component {
@@ -9,10 +9,8 @@ class TicketNew extends Component {
     }
 
     onSubmit(props){
-        this.props.createPost(props)
-            .then(()=>{
-                this.context.router.push('/')
-            })
+        this.props.createTicket(props)
+            
     }
 
     render(){
@@ -77,4 +75,4 @@ export default reduxForm({
     form: 'TicketsNewForm',
     fields: ['title', 'categories', 'content'],
     validate
-}, null, { createTicket})(TicketNew)
+}, null, actions)(TicketNew)

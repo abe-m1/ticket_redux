@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect} from 'react-redux'
 
-import * as actions from '../actions/index'
+import * as actions from '../../actions/index'
 import { Link } from 'react-router'
 
 class TicketIndex extends Component{
@@ -9,13 +9,18 @@ class TicketIndex extends Component{
         this.props.fetchTickets()
     }
 
+     componentWillUpdate(){
+        this.props.fetchTickets()
+        
+    }
+
     renderTickets(){
         return this.props.tickets.map((ticket)=>{
             return(
                 <li className="list-group-item" key={ticket.id}>
-                    <Link to={"ticket/" + ticket.id} >
+                    <Link to={"ticket/" + ticket._id} >
                         <span className="pull-xs-right">{ticket.categories} </span>
-                        <strong> {post.title} </strong>
+                        <strong> {ticket.title} </strong>
                     </Link>
                 </li>
             )
@@ -26,12 +31,12 @@ class TicketIndex extends Component{
         return(
             <div>
                 <div className="text-xs-right">
-                    <Link to="/ticket/new" className="btn btn-primary">
+                    <Link to="/new" className="btn btn-primary">
                     add a new ticket
                     </Link>
                 </div>
 
-                <h2>Ticktets</h2>
+                <h2>Tickets</h2>
                 <ul className="list-group">
                     {this.renderTickets()}
                 </ul>
@@ -41,7 +46,8 @@ class TicketIndex extends Component{
 }
 
 function mapStateToProps(state){
-    return { posts: state.ticket.all }
+    console.log('STATE',state)
+    return { tickets : state.ticket.all }
 }
 
-export default connect(mapStateToProps, { fetchTickets: fetchTickets})(TicketIndex)
+export default connect(mapStateToProps, actions)(TicketIndex)
