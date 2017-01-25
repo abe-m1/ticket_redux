@@ -19,6 +19,11 @@ class TicketShow extends Component {
           
     }
 
+    onEditClick(){
+        this.props.editTicket(this.props.params.id)
+          
+    }
+
     render(){
         const { ticket } = this.props
 
@@ -28,20 +33,22 @@ class TicketShow extends Component {
 
         return(
             <div>
-                <Link to="/ticket">Back to Index</Link>
+                
                 <button className="btn btn-danger pull-xs-right"
                     onClick={this.onDeleteClick.bind(this)}>
                     Delete Ticket 
                 </button>
-
-                <h3>Categories: {this.props.ticket.categories}</h3>
-                <p>{this.props.ticket.content}</p>
+                <Link to={"edit/" + ticket._id} >Edit Ticket</Link> 
+                <h2>Title: {this.props.ticket.title}</h2>
+                <h3>Category: {this.props.ticket.categories}</h3>
+                <h3>Content: {this.props.ticket.content}</h3>
             </div>
         )
     }
 }
 
 function mapStateToProps(state){
+    console.log(state)
     return { ticket: state.ticket.ticket}
 }
 

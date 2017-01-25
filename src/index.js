@@ -15,6 +15,7 @@ import RequireAuth from './components/auth/require_auth';
 import Welcome from './components/welcome'
 import TicketNew from './components/ticket/ticket_new'
 import TicketShow from './components/ticket/ticket_show'
+import TicketEdit from './components/ticket/ticket_edit'
 
 import reducers from './reducers';
 import { AUTH_USER } from './actions/types'
@@ -43,6 +44,7 @@ ReactDOM.render(
         </Route>
         <Route path="new" component={TicketNew} />
         <Route path="ticket/:id" component={ TicketShow} />
+        <Route path="edit/:id" component={ TicketEdit} />
       </Route>  
     </Router>
   </Provider>

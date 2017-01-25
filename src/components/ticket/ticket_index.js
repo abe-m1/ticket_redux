@@ -8,15 +8,15 @@ class TicketIndex extends Component{
         this.props.fetchTickets()
     }
 
-     componentWillUpdate(){
-        this.props.fetchTickets()
+    //  componentWillUpdate(){
+    //     this.props.fetchTickets()
         
-    }
+    // }
 
     renderTickets(){
         return this.props.tickets.map((ticket)=>{
             return(
-                <li className="list-group-item" key={ticket.id}>
+                <li className="list-group-item" key={ticket._id}>
                     <Link to={"ticket/" + ticket._id} >
                         <span className="pull-xs-right">{ticket.categories} </span>
                         <strong> {ticket.title} </strong>

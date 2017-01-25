@@ -3,25 +3,36 @@ import { reduxForm } from 'redux-form'
 import * as actions from '../../actions'
 import { Link } from 'react-router'
 
-class TicketNew extends Component {
+class TicketEdit extends Component {
+    
     static contextTypes = {
         router: PropTypes.object
     }
 
+  
+
+    
+
+    componentWillMount(){
+        this.props.fetchTickets()
+    }
+
     onSubmit(props){
-        this.props.createTicket(props)
+        console.log('hello')
+        this.props.editTicket(this.props.params.id, props)
             
     }
 
     render(){
+        console.log('this.props', this.props)
         const { fields: { title, categories, content }, handleSubmit } = this.props
 
         return(
             <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
-                <h3>create a new ticket</h3>
+                <h3>edit the ticket</h3>
                 <div className={`form-group ${title.touched && title.invalid ? 'has-danger': ''}`}>
                     <label>Title</label>
-                    <input type="text" className="form-control" {...title} />
+                    <input type="text" className="form-control" {...title}  />
 
                     <div className="text-help">
                         {title.touched ? title.error : ''}
@@ -39,7 +50,7 @@ class TicketNew extends Component {
 
                 <div className={`form-group ${content.touched && content.invalid ? 'has-danger': ''}`}>
                     <label>Content</label>
-                    <input type="text" className="form-control" {...content} />
+                    <input type="text" className="form-control" {...content}/>
 
                     <div className="text-help">
                         {content.touched ? content.error : ''}
@@ -71,8 +82,25 @@ function validate(values){
     return errors
 }
 
+//  function mapStateToProps(state){
+//      console.log(state)
+//      return { ticket: state.ticket.ticket}
+//  }
+
 export default reduxForm({
-    form: 'TicketsNewForm',
+    form: 'TicketsEditForm',
     fields: ['title', 'categories', 'content'],
     validate
-}, null, actions)(TicketNew)
+}, 
+
+
+state => ({
+  initialValues: {
+    title: state.ticket.ticket.title,
+    categories: state.ticket.ticket.categories,
+    content: state.ticket.ticket.content,
+  }
+})
+
+
+, actions)(TicketEdit)

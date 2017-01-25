@@ -19,7 +19,7 @@ export function signinUser({email, password}){
 
                 localStorage.setItem('token', response.data.token)
 
-                browserHistory.push('/feature')
+                browserHistory.push('/ticket')
             })
             .catch(()=>{
                 dispatch(authError('bad login info'))
@@ -40,7 +40,7 @@ export function signupUser({email, password}){
             .then(response =>{
                 dispatch({ type: AUTH_USER})
                 localStorage.setItem('token', response.data.token)
-                browserHistory.push('/feature')
+                browserHistory.push('/ticket')
             })
             .catch(response => dispatch(authError(response.data.error)))
     }
@@ -122,4 +122,19 @@ export function createTicket({ title, categories, content}){
     
 }
 
+
+ export function editTicket(id, data){
+     console.log('HIT')
+     console.log(id)
+     console.log(data)
+     const {title, categories, content} = data
+     return function(dispatch){
+         axios.put(`${ROOT_URL}/ticket/${id}`, { title, categories, content }, { headers: {authorization: localStorage.getItem('token')}})
+            .then(response =>{  
+                console.log('this is edit response', response)          
+                browserHistory.push('/ticket')
+                dispatch({ type: FETCH_TICKETS})
+            })
+     }
+}
 
