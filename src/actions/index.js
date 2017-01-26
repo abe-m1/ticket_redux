@@ -80,7 +80,8 @@ export function fetchMessage(){
      }
  }
 
-export function createTicket({ title, categories, content}){
+export function createTicket({ title, categories, content}, myFile){
+    console.log('myFile', myFile)
     return function(dispatch){
         axios.post(`${ROOT_URL}/ticket`, { title, categories, content }, { headers: {authorization: localStorage.getItem('token')}})
             .then(response =>{

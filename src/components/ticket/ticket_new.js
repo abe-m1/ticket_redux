@@ -2,7 +2,8 @@ import React, { Component, PropTypes }  from 'react'
 import { reduxForm } from 'redux-form'
 import * as actions from '../../actions'
 import { Link } from 'react-router'
-import { FileUpload } from 'redux-file-upload'
+import { findDOMNode } from 'react-dom'
+// import UploadImage from './ticket_upload'
 
 class TicketNew extends Component {
     static contextTypes = {
@@ -10,7 +11,9 @@ class TicketNew extends Component {
     }
 
     onSubmit(props){
-        this.props.createTicket(props)
+        event.preventDefault()
+        const myFile = findDOMNode(this.refs.myFile).files[0]
+        this.props.createTicket(props, myFile)
             
     }
 
@@ -48,25 +51,35 @@ class TicketNew extends Component {
                     </div>
                 </div>
 
-                <button type="submit" className="btn btn-primary">Submit</button>
+                 <h4>Add file</h4>
+                    <div className='row'>
+                        <div className='col-xs-6 upload-form-wrapper'>
+                             <div>
+        <div className='form-group'>
+          <input
+            type='file'
+            ref='myFile'
+            onChange={this.onFileChange}
+            className='form-control' />
+        </div>
+        <button
+          type='submit'
+        //   disabled={!this.state.valid}
+          className='btn btn-success' >
+          Upload
+        </button>
+    </div>
+                        </div>
+                    </div>
+
+                
                 <Link to="/ticket" className="btn btn-danger">Cancel</Link>
             </form>
 
-            <FileUpload
-  allowedFileTypes={['jpg', 'pdf']}
-  data={{ type: 'picture' }}
-  dropzoneId="fileUpload"
-  url="https:/url.org/api/docs/upload"
->
-  <button>
-    Click or drag here
-  </button>
-</FileUpload>
-            
-
-
             </div>
 
+            
+  
 
         )
     }

@@ -4,25 +4,27 @@ import { findDOMNode } from 'react-dom'
 export default class UploadImage extends Component {
   constructor(props) {
     super(props)
+    this.state = { valid: false }
     this.onFileChange = this.onFileChange.bind(this)
     this.submit = this.submit.bind(this)
   }
-  onFileChange(e) {
-    if (e.target.files[0]) {
-      console.log('file',e.target.files)
+  onFileChange(event) {
+    if (event.target.files[0]) {
+      console.log('file',event.target.files)
       this.setState( {valid: true} )
     } else {
       this.setState( {valid: false} )
     }
   }
-  submit(e) {
-    e.preventDefault()
+  submit(event) {
+    event.preventDefault()
     const myFile = findDOMNode(this.refs.myFile).files[0]
     this.props.handleSubmit(myFile)
   }
   render() {
     return (
-      <form className='add-product' onSubmit={this.submit}>
+    //   <form className='add-product' onSubmit={this.submit}>
+        <div>
         <div className='form-group'>
           <input
             type='file'
@@ -36,7 +38,7 @@ export default class UploadImage extends Component {
           className='btn btn-success' >
           Upload
         </button>
-      </form>
+    </div>
     )
   }
 }
