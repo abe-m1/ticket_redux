@@ -42,6 +42,7 @@ class TicketShow extends Component {
                 <h2>Title: {this.props.ticket.title}</h2>
                 <h3>Category: {this.props.ticket.categories}</h3>
                 <h3>Content: {this.props.ticket.content}</h3>
+                <img  src={this.props.ticket.imageUrl} />
             </div>
         )
     }

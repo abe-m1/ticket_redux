@@ -86,6 +86,7 @@ export function fetchMessage(){
 export function createTicket({ title, categories, content}, myFile){
     console.log('myFile', myFile)
     return function(dispatch){
+
         // axios.post(`${ROOT_URL}/ticket`, { title, categories, content }, { headers: {authorization: localStorage.getItem('token')}})
         //     .then(response =>{
         let upload=  request.post(CLOUDINARY_UPLOAD_URL)
@@ -99,29 +100,14 @@ export function createTicket({ title, categories, content}, myFile){
                           .then(response =>{
                               browserHistory.push('/ticket')
                               dispatch({ type: FETCH_TICKETS})
-                        })        
-              
-        //         browserHistory.push('/ticket')
-        //         dispatch({ type: FETCH_TICKETS})
-        //     })
-            
+                        })   
+                      })     
+     
     }
+
 }
 
 
-export function uploadFile(file) {
-
-  return dispatch => {
-    dispatch({ type: UPLOAD_REQUEST })
-
-    // return request.post('https://file.io')
-      let upload=  request.post(CLOUDINARY_UPLOAD_URL)
-                        .field('upload_preset', CLOUDINARY_UPLOAD_PRESET)
-                        .field('file', file);
-                        
-                      upload.end((err, response) => { console.log(response)})
-  }
-}
 
 
 

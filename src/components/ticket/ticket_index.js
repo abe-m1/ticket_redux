@@ -17,6 +17,7 @@ class TicketIndex extends Component{
         return this.props.tickets.map((ticket)=>{
             return(
                 <li className="list-group-item" key={ticket._id}>
+                 <img style={{width: '100px'}} src={ticket.imageUrl}/>
                     <Link to={"ticket/" + ticket._id} >
                         <span className="pull-xs-right">{ticket.categories} </span>
                         <strong> {ticket.title} </strong>
