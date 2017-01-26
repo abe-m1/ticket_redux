@@ -1,4 +1,5 @@
 import axios from 'axios'
+import  request from 'superagent-bluebird-promise'
 import { browserHistory } from 'react-router'
 import { AUTH_USER , 
         AUTH_ERROR, 
@@ -10,6 +11,8 @@ import { AUTH_USER ,
         DELETE_TICKET
         } from './types'
 const ROOT_URL = "http://localhost:5000"
+const CLOUDINARY_UPLOAD_PRESET = 'yvoqb7az';
+const CLOUDINARY_UPLOAD_URL = 'https://api.cloudinary.com/v1_1/dahbyjcew/upload';
 
 export function signinUser({email, password}){
     return function(dispatch){
@@ -83,16 +86,44 @@ export function fetchMessage(){
 export function createTicket({ title, categories, content}, myFile){
     console.log('myFile', myFile)
     return function(dispatch){
-        axios.post(`${ROOT_URL}/ticket`, { title, categories, content }, { headers: {authorization: localStorage.getItem('token')}})
-            .then(response =>{
-                
-                
-                browserHistory.push('/ticket')
-                dispatch({ type: FETCH_TICKETS})
-            })
+        // axios.post(`${ROOT_URL}/ticket`, { title, categories, content }, { headers: {authorization: localStorage.getItem('token')}})
+        //     .then(response =>{
+        let upload=  request.post(CLOUDINARY_UPLOAD_URL)
+                        .field('upload_preset', CLOUDINARY_UPLOAD_PRESET)
+                        .field('file', myFile);
+                        
+                      upload.end((err, response) => { 
+                          console.log(response)
+                          const imageUrl = response.body.url
+                          axios.post(`${ROOT_URL}/ticket`, { title, categories, content, imageUrl }, { headers: {authorization: localStorage.getItem('token')}})
+                          .then(response =>{
+                              browserHistory.push('/ticket')
+                              dispatch({ type: FETCH_TICKETS})
+                        })        
+              
+        //         browserHistory.push('/ticket')
+        //         dispatch({ type: FETCH_TICKETS})
+        //     })
             
     }
 }
+
+
+export function uploadFile(file) {
+
+  return dispatch => {
+    dispatch({ type: UPLOAD_REQUEST })
+
+    // return request.post('https://file.io')
+      let upload=  request.post(CLOUDINARY_UPLOAD_URL)
+                        .field('upload_preset', CLOUDINARY_UPLOAD_PRESET)
+                        .field('file', file);
+                        
+                      upload.end((err, response) => { console.log(response)})
+  }
+}
+
+
 
  export function fetchTicket(id){
      return function(dispatch){
